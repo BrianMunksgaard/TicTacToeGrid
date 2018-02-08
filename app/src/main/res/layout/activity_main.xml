@@ -41,7 +41,7 @@
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
         android:layout_height="0dp"
-        android:src="@drawable/kryds" />
+        android:src="@drawable/blank" />
         
         <ImageView
         android:id="@+id/felt3"
@@ -52,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_rowWeight="1"
         android:layout_height="0dp"
-        android:src="@drawable/bolle" />    
+        android:src="@drawable/blank" />
 
       
         <ImageView
@@ -64,7 +64,7 @@
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
         android:layout_height="0dp"
-        android:src="@drawable/kryds" />
+        android:src="@drawable/blank" />
 
         <ImageView
             android:layout_column="1"
@@ -86,7 +86,7 @@
             android:layout_columnWeight="1"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
-            android:src="@drawable/bolle" />
+            android:src="@drawable/blank" />
 
        
        <ImageView
@@ -109,7 +109,7 @@
         android:scaleType="fitXY"
         android:layout_rowWeight="1"
         android:layout_height="0dp"
-        android:src="@drawable/bolle" />
+        android:src="@drawable/blank" />
 
            <ImageView
         android:id="@+id/felt9"
