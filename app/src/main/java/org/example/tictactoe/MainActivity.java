@@ -1,18 +1,22 @@
 package org.example.tictactoe;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TooManyListenersException;
+
+import static android.content.ContentValues.TAG;
 
 // we implement the onClickListener - so this means there
 //will be an onClick method defined for ALL the views later
@@ -98,7 +102,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onClick(View view) {
 		// TODO Here you need to get the ID of the view 
@@ -107,9 +111,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// put a "O" and also make sure that you cannot
 		// put a "O" or a "X" if there is already something.
 
-		if (itemsOnGameBoard >= 5) {
-			// Check win condition.
-		}
+
 
 		if(itemsOnGameBoard < 6) {
 			if(isEmpty(view.getId())) {
@@ -121,7 +123,15 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 		}
 
-
+        if (itemsOnGameBoard >= 5) {
+            if(hasWinner()) {
+                Context context = getApplicationContext();
+                CharSequence text = "We have a winner";
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+            }
+            // Check win condition.
+        }
 
 /*
 		if (view.getId()==R.id.felt1)
@@ -172,22 +182,26 @@ public class MainActivity extends Activity implements OnClickListener {
 	private boolean hasWinner() {
 		List<TicTacToeFieldState> gb = new ArrayList<>(gameBoard.values());
 
-		return 	isWinnnerRow(gb, 0, 1, 2) &&
-				isWinnnerRow(gb, 3, 4, 5) &&
-				isWinnnerRow(gb, 6, 7, 8) &&
-				isWinnnerRow(gb, 0, 3, 6) &&
-				isWinnnerRow(gb, 1, 4, 7) &&
-				isWinnnerRow(gb, 2, 5, 8) &&
-				isWinnnerRow(gb, 0, 4, 8) &&
+		return 	isWinnnerRow(gb, 0, 1, 2) ||
+				isWinnnerRow(gb, 3, 4, 5) ||
+				isWinnnerRow(gb, 6, 7, 8) ||
+				isWinnnerRow(gb, 0, 3, 6) ||
+				isWinnnerRow(gb, 1, 4, 7) ||
+				isWinnnerRow(gb, 2, 5, 8) ||
+				isWinnnerRow(gb, 0, 4, 8) ||
 				isWinnnerRow(gb, 2, 4, 6);
 	}
 
 	private boolean isWinnnerRow(List<TicTacToeFieldState> board, int x, int y, int z) {
-		return isWinnerRow(board.get(x), board.get(y), board.get(z));
+        Log.d( "KURT", "isWinnnerRow: " + x + ", " + y + ", " + z);
+        return isWinnerRow(board.get(x), board.get(y), board.get(z));
 	}
 
 	private boolean isWinnerRow(TicTacToeFieldState s1, TicTacToeFieldState s2, TicTacToeFieldState s3) {
-		return s1 == s2 && s1 == s3 && s1 != TicTacToeFieldState.EMPTY;
+        Log.d( "KURT", "isWinnerRow: s1 = " + s1.toString());
+        Log.d( "KURT", "isWinnerRow: s2 = " + s2.toString());
+        Log.d( "KURT", "isWinnerRow: s3 = " + s3.toString());
+        return s1 == s2 && s1 == s3 && s1 != TicTacToeFieldState.EMPTY;
 	}
 
 	private boolean isEmpty(View v) {
