@@ -11,12 +11,14 @@ public class BoardField {
     private int fieldNumber;
     private int viewId;
     private TicTacToeFieldState state;
+    private boolean selected;
 
     public BoardField(int fieldNumber, int viewId, TicTacToeFieldState state) {
         this.fieldNumber = fieldNumber;
         this.viewId = viewId;
         this.state = state;
-        Log.d("KURT", "New field: " + fieldNumber + ", " + viewId + ", " + state.toString());
+        this.selected = false;
+        Log.d("BoardField", "Constructor: " + fieldNumber + ", " + viewId + ", " + state.toString());
     }
 
     public int getFieldNumber() {
@@ -40,11 +42,23 @@ public class BoardField {
     }
 
     public void setState(TicTacToeFieldState state) {
-        Log.d("KURT", "Changing state in field " + this.fieldNumber + " from " + this.state.toString() + " to " + state.toString());
+        Log.d("BoardField", "Changing state in field " + this.fieldNumber + " from " + this.state.toString() + " to " + state.toString());
         this.state = state;
     }
 
     public boolean isEmpty() {
         return this.state == TicTacToeFieldState.EMPTY;
+    }
+
+    public boolean isOccupied() {
+        return this.state != TicTacToeFieldState.EMPTY;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

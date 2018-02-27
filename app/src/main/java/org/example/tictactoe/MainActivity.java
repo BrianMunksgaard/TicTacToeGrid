@@ -124,29 +124,27 @@ public class MainActivity extends Activity implements OnClickListener, View.OnLo
 
 	@Override
 	public void onClick(View view) {
-		// TODO Here you need to get the ID of the view 
-		// being pressed and then if the view is pressed
-		// you need to first put a "X", then next time 
-		// put a "O" and also make sure that you cannot
-		// put a "O" or a "X" if there is already something.
-
-		if(isOccupied(view)) {
-			Context context = getApplicationContext();
-			CharSequence text = "Occupied";
-			int duration = Toast.LENGTH_SHORT;
-			Toast.makeText(context, text, duration).show();
-		}
 
 		if(!winnerFound) {
+
+			BoardField boardField = gameBoard.get(view.getId());
+
+			/*
+			if(boardField.isOccupied() && itemsOnGameBoard == 6) {
+				boardField.setSelected(true);
+				itemsOnGameBoard = 5;
+				return;
+			}
+			*/
 
 			if (itemsOnGameBoard < 6) {
 				if (isEmpty(view.getId())) {
 					TicTacToeFieldState item = nextItem;
 					Log.d("KURT", "Putting " + nextItem.toString() + " on the board.");
 					nextItem = nextItem == TicTacToeFieldState.X ? TicTacToeFieldState.O : TicTacToeFieldState.X;
-					gameBoard.get(view.getId()).setState(item);
+					boardField.setState(item);
 					itemsOnGameBoard++;
-					draw(view, item);
+					draw(boardField);
 				}
 			}
 
@@ -176,23 +174,28 @@ public class MainActivity extends Activity implements OnClickListener, View.OnLo
 		int duration = Toast.LENGTH_SHORT;
 		Toast.makeText(context, text, duration).show();
 		//view.setRotation(0.5f);
-		
+
 		return true;
 	}
 
 	private void draw(BoardField bf) {
-		draw(findViewById(bf.getViewId()), bf.getState());
-	}
+		ImageView imageView = (ImageView)findViewById(bf.getViewId());
+		TicTacToeFieldState state = bf.getState();
 
-	private void draw(View view, TicTacToeFieldState state) {
-
-		ImageView imageView = (ImageView)view;
 		switch (state) {
 			case X:
-				imageView.setImageResource(R.drawable.kryds);
+				if(bf.isSelected()) {
+					imageView.setImageResource(R.drawable.kryds_selected);
+				} else {
+					imageView.setImageResource(R.drawable.kryds);
+				}
 				break;
 			case O:
-				imageView.setImageResource(R.drawable.bolle);
+				if(bf.isSelected()) {
+					imageView.setImageResource(R.drawable.bolle_selected);
+				} else {
+					imageView.setImageResource(R.drawable.bolle);
+				}
 				break;
 			default:
 				imageView.setImageResource(R.drawable.blank);
